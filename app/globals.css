@@ -1,1 +1,413 @@
-*{box-sizing:border-box}body{margin:0;background:#08070d;color:#f7f4ff;font-family:Arial,'Noto Sans KR',sans-serif}main{max-width:1280px;margin:auto;padding:22px}header{min-height:190px;border:1px solid #30234d;border-radius:22px;background:radial-gradient(circle at 70% 30%,#5531a9 0,transparent 35%),linear-gradient(135deg,#171023,#0c0912);display:flex;align-items:center;padding:36px;position:relative;overflow:hidden}header h1{font-size:58px;letter-spacing:10px;margin:2px 0;background:linear-gradient(90deg,#b899ff,#7a5cff);background-clip:text;color:transparent}header p{margin:0;color:#c9baff}.menu{position:absolute;top:20px;left:20px;background:#17131f;border:1px solid #413459;color:white;border-radius:10px;padding:9px 12px}.controls{padding:24px 0;display:grid;gap:14px}.controls input,.controls select{background:#111019;border:1px solid #342a45;color:white;border-radius:12px;padding:14px}.controls input{width:100%;font-size:16px}.filters{display:flex;gap:10px}.table{border:1px solid #282230;border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:60px 2fr 1.3fr 1fr 80px 1.4fr 1fr 70px;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid #211c28;font-size:14px}.th{background:#14111a;color:#a89db8;font-size:12px}.tag{color:#c9b5ff}.tr button{background:#211832;color:#cdb9ff;border:1px solid #4b3670;border-radius:8px;padding:7px}.state{text-align:center;padding:60px;color:#aaa}@media(max-width:800px){main{padding:10px}header{min-height:150px;padding:28px 20px}header h1{font-size:40px}.tr{grid-template-columns:36px 1.6fr 1fr 64px}.tr>*:nth-child(4),.tr>*:nth-child(6),.tr>*:nth-child(7),.tr>*:nth-child(8){display:none}.filters{display:grid}.th{font-size:11px}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #08070d;
+  color: #f7f4ff;
+  font-family: Arial, "Noto Sans KR", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+/* 전체 페이지 */
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 22px;
+}
+
+/* 상단 SUDAL 배너 */
+header {
+  min-height: 190px;
+  border: 1px solid #30234d;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 70% 30%, #5531a9 0, transparent 35%),
+    linear-gradient(135deg, #171023, #0c0912);
+  display: flex;
+  align-items: center;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+header h1 {
+  font-size: 58px;
+  letter-spacing: 10px;
+  margin: 2px 0;
+  background: linear-gradient(90deg, #b899ff, #7a5cff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+header small {
+  color: #eee6ff;
+}
+
+header p {
+  margin: 0;
+  color: #c9baff;
+}
+
+.menu {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #17131f;
+  border: 1px solid #413459;
+  color: white;
+  border-radius: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+
+/* 검색 + 필터 전체 영역 */
+.controls {
+  margin-top: 20px;
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+  background: #0f0b14;
+  border: 1px solid #292033;
+  border-radius: 18px;
+}
+
+/* 검색창 */
+.controls input {
+  width: 100%;
+  background: #0b0910;
+  border: 1px solid #30263b;
+  color: #fff;
+  border-radius: 14px;
+  padding: 15px 16px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.controls input::placeholder {
+  color: #8e859b;
+}
+
+.controls input:focus {
+  border-color: #7656e8;
+  box-shadow: 0 0 0 3px rgba(118, 86, 232, 0.12);
+}
+
+/* 필터 열기 버튼 */
+.filterToggle {
+  width: fit-content;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #2868f0;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filterToggle:hover {
+  filter: brightness(1.08);
+}
+
+/* 장르/아티스트 필터 박스 */
+.filterPanel {
+  padding: 16px;
+  border: 1px solid #292131;
+  background: #0b0910;
+  border-radius: 15px;
+}
+
+.filterGroup + .filterGroup {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #201925;
+}
+
+.filterTitle {
+  margin: 0 0 11px;
+  color: #a99ab8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.filterTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+
+.filterTitleRow .filterTitle {
+  margin: 0;
+}
+
+.filterHint {
+  color: #8e819d;
+  font-size: 11px;
+}
+
+/* 장르 / 아티스트 버튼들 */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.chip {
+  border: 1px solid #463852;
+  background: #100c15;
+  color: #f2ebfa;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.chip:hover {
+  transform: translateY(-1px);
+  background: #18101f;
+  border-color: #795f91;
+}
+
+.chip.active {
+  background: linear-gradient(135deg, #a86cff, #8c63ee);
+  border-color: transparent;
+  color: #fff;
+}
+
+.chipCount {
+  margin-left: 5px;
+  font-size: 11px;
+  color: #b4a7c1;
+}
+
+.chip.active .chipCount {
+  color: #f4ebff;
+}
+
+/* 장르별 포인트 */
+.chip[data-genre="J-POP"] {
+  border-color: #9e274f;
+}
+
+.chip[data-genre="POP"] {
+  border-color: #8d761d;
+}
+
+.chip[data-genre="R&B/Soul"] {
+  border-color: #246c8d;
+}
+
+.chip[data-genre="국내드라마"] {
+  border-color: #62417d;
+}
+
+.chip[data-genre="댄스"] {
+  border-color: #8c5325;
+}
+
+.chip[data-genre="랩/힙합"] {
+  border-color: #803548;
+}
+
+.chip[data-genre="락/메탈"] {
+  border-color: #6d477b;
+}
+
+.chip[data-genre="발라드"] {
+  border-color: #864666;
+}
+
+.chip[data-genre="인디음악"] {
+  border-color: #78457c;
+}
+
+.chip[data-genre="일렉트로니카"] {
+  border-color: #62477e;
+}
+
+.chip[data-genre="포크/블루스"] {
+  border-color: #66517e;
+}
+
+/* 더보기 */
+.moreButton {
+  border: 1px dashed #493950;
+  background: transparent;
+  color: #bcaacb;
+  border-radius: 999px;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.moreButton:hover {
+  background: #16101c;
+}
+
+/* 정렬 영역 */
+.sortRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #241c2b;
+}
+
+.sortLabel {
+  color: #9e90ab;
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.sortButton,
+.sortRow select {
+  background: #100d15;
+  border: 1px solid #342a40;
+  color: #f6f0fb;
+  border-radius: 11px;
+  padding: 10px 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.sortButton.active {
+  background: #191222;
+  border-color: #654c7a;
+}
+
+/* 검색 결과 */
+.resultCount {
+  margin-top: 4px;
+  color: #f5effb;
+  font-size: 14px;
+}
+
+/* 노래 목록 */
+.table {
+  margin-top: 18px;
+  border: 1px solid #282230;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.tr {
+  display: grid;
+  grid-template-columns: 60px 2fr 1.3fr 1fr 80px 1.4fr 1fr 70px;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 15px;
+  border-bottom: 1px solid #211c28;
+  font-size: 14px;
+}
+
+.tr:last-child {
+  border-bottom: 0;
+}
+
+.tr:not(.th):hover {
+  background: #0e0b12;
+}
+
+.th {
+  background: #14111a;
+  color: #a89db8;
+  font-size: 12px;
+}
+
+.tag {
+  width: fit-content;
+  padding: 5px 9px;
+  background: #1b1322;
+  color: #d5bfff;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.days {
+  color: #bd86ff;
+  font-weight: 700;
+}
+
+.copyButton,
+.tr button {
+  background: #211832;
+  color: #cdb9ff;
+  border: 1px solid #4b3670;
+  border-radius: 8px;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.copyButton:hover,
+.tr button:hover {
+  background: #302047;
+}
+
+.state {
+  text-align: center;
+  padding: 60px;
+  color: #aaa;
+}
+
+/* 모바일 */
+@media (max-width: 800px) {
+  main {
+    padding: 10px;
+  }
+
+  header {
+    min-height: 150px;
+    padding: 28px 20px;
+  }
+
+  header h1 {
+    font-size: 40px;
+  }
+
+  .controls {
+    padding: 13px;
+  }
+
+  .chips {
+    gap: 7px;
+  }
+
+  .chip {
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+
+  .sortRow {
+    flex-wrap: wrap;
+  }
+
+  .tr {
+    grid-template-columns: 36px 1.6fr 1fr 64px;
+  }
+
+  .tr > *:nth-child(4),
+  .tr > *:nth-child(6),
+  .tr > *:nth-child(7),
+  .tr > *:nth-child(8) {
+    display: none;
+  }
+
+  .th {
+    font-size: 11px;
+  }
+}
